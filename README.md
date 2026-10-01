@@ -90,7 +90,12 @@ export function OrdersTour() {
 
   const tour = defineTour("orders-onboarding", [
     { title: "Welcome", content: "A quick look around." }, // no target = centered
-    { target: "nav-orders", title: "Orders", content: "Everything you've sold.", placement: "right" },
+    {
+      target: "nav-orders",
+      title: "Orders",
+      content: "Everything you've sold.",
+      placement: "right",
+    },
     {
       target: "orders-table",
       title: "The table",
@@ -113,7 +118,7 @@ Or start one yourself: `const { startTour } = useOnboarding(); startTour(tour)`.
 ```tsx
 import { onboardTarget } from "@binii/react-onboarder/target";
 
-<table {...onboardTarget("orders-table")} />
+<table {...onboardTarget("orders-table")} />;
 ```
 
 To keep it typed, wrap it once in a file that is not marked `"use client"`:
@@ -177,33 +182,33 @@ import { createWebStorage, createMemoryStorage } from "@binii/react-onboarder";
 
 ## Provider props
 
-| Prop | Default | |
-| --- | --- | --- |
-| `storage` | localStorage | Where "seen" state lives |
-| `labels` | English | Partial override of all UI text |
-| `classNames` | none | Tailwind classes per slot |
-| `unstyled` | `false` | Drop the default look |
-| `renderCard` | none | Custom card |
-| `zIndex` | `2147483000` | Stacking order of the overlay |
-| `container` | `document.body` | Portal target |
-| `showArrow` | `true` | Arrow pointing at the target |
-| `closeOnOverlayClick` | `false` | Dismiss on backdrop click |
-| `allowTargetInteraction` | `true` | Let clicks reach the highlighted element |
-| `keyboard` | `true` | Esc closes, left/right arrows navigate (ignored while typing) |
-| `padding` / `radius` | `8` / `12` | Spotlight defaults (per-step overrides exist) |
-| `onStart` `onStepChange` `onComplete` `onSkip` | none | Lifecycle callbacks |
+| Prop                                           | Default         |                                                               |
+| ---------------------------------------------- | --------------- | ------------------------------------------------------------- |
+| `storage`                                      | localStorage    | Where "seen" state lives                                      |
+| `labels`                                       | English         | Partial override of all UI text                               |
+| `classNames`                                   | none            | Tailwind classes per slot                                     |
+| `unstyled`                                     | `false`         | Drop the default look                                         |
+| `renderCard`                                   | none            | Custom card                                                   |
+| `zIndex`                                       | `2147483000`    | Stacking order of the overlay                                 |
+| `container`                                    | `document.body` | Portal target                                                 |
+| `showArrow`                                    | `true`          | Arrow pointing at the target                                  |
+| `closeOnOverlayClick`                          | `false`         | Dismiss on backdrop click                                     |
+| `allowTargetInteraction`                       | `true`          | Let clicks reach the highlighted element                      |
+| `keyboard`                                     | `true`          | Esc closes, left/right arrows navigate (ignored while typing) |
+| `padding` / `radius`                           | `8` / `12`      | Spotlight defaults (per-step overrides exist)                 |
+| `onStart` `onStepChange` `onComplete` `onSkip` | none            | Lifecycle callbacks                                           |
 
 ## Step options
 
-| Option | |
-| --- | --- |
-| `target` | A target id, or `() => HTMLElement \| null`. Omit for a centered step. |
-| `title` `content` | Any `ReactNode`. |
-| `placement` | Preferred side; flips and shifts automatically. |
-| `padding` `radius` | Spotlight overrides for this step. |
-| `onBeforeShow` | Runs before the target lookup; may be async. |
-| `timeout` | How long to wait for the target (default 3000 ms) before skipping the step. |
-| `disableScroll` | Skip the automatic scroll-into-view. |
+| Option             |                                                                             |
+| ------------------ | --------------------------------------------------------------------------- |
+| `target`           | A target id, or `() => HTMLElement \| null`. Omit for a centered step.      |
+| `title` `content`  | Any `ReactNode`.                                                            |
+| `placement`        | Preferred side; flips and shifts automatically.                             |
+| `padding` `radius` | Spotlight overrides for this step.                                          |
+| `onBeforeShow`     | Runs before the target lookup; may be async.                                |
+| `timeout`          | How long to wait for the target (default 3000 ms) before skipping the step. |
+| `disableScroll`    | Skip the automatic scroll-into-view.                                        |
 
 ## Notes
 
