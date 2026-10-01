@@ -5,7 +5,9 @@
   "license": "MIT",
   "author": "Binii",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,10 +39,12 @@
         "default": "./dist/target.cjs"
       }
     },
+    "./tailwind.css": "./tailwind.css",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
+    "tailwind.css",
     "README.md",
     "LICENSE"
   ],

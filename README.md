@@ -12,16 +12,23 @@ Fluid, type-safe product tours for React and Next.js. Styled with Tailwind, anim
 ## Install
 
 ```bash
-pnpm add @binii/react-onboarder framer-motion
+pnpm add @binii/react-onboarder
 ```
 
 Peer dependencies: `react` and `react-dom` 18 or 19, `framer-motion` 11 to 13. Your project needs Tailwind CSS (v3.4+ or v4).
 
 ## Let Tailwind see the classes
 
-Tailwind only generates classes it finds in your sources, and it skips `node_modules` by default. Add one line.
+This package ships Tailwind class names inside its JavaScript, not a stylesheet. Tailwind only generates CSS for classes it finds in your sources, and it skips `node_modules`, so **every project that installs the package needs this one-time setup**.
 
-**Tailwind v4** (in your main CSS file; the path is relative to that file):
+**Tailwind v4**: add one import to your main CSS file, after Tailwind's:
+
+```css
+@import "tailwindcss";
+@import "@binii/react-onboarder/tailwind.css";
+```
+
+If you prefer to point Tailwind at the files yourself, this is equivalent (the path is relative to your CSS file):
 
 ```css
 @import "tailwindcss";
@@ -37,7 +44,7 @@ content: [
 ],
 ```
 
-Dark mode follows your Tailwind `dark:` strategy.
+Symptom of skipping this: the tour works but looks unstyled (no dimmed backdrop, no card styling). Dark mode follows your Tailwind `dark:` strategy.
 
 ## Quick start
 

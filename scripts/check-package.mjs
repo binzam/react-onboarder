@@ -10,10 +10,22 @@ const bin = (name) => join("node_modules", ".bin", name);
 const dir = mkdtempSync(join(tmpdir(), "onboarder-pack-"));
 
 try {
-  execFileSync("pnpm", ["pack", "--pack-destination", dir], { stdio: "inherit" });
-  const tarball = join(dir, readdirSync(dir).find((file) => file.endsWith(".tgz")));
+  execFileSync("pnpm", ["pack", "--pack-destination", dir], {
+    stdio: "inherit",
+  });
+  const tarball = join(
+    dir,
+    readdirSync(dir).find((file) => file.endsWith(".tgz")),
+  );
   execFileSync(bin("publint"), [tarball], { stdio: "inherit" });
-  execFileSync(bin("attw"), [tarball], { stdio: "inherit" });
+  // tailwind.css is a plain stylesheet export; attw only understands JS/types entry points.
+  execFileSync(
+    bin("attw"),
+    [tarball, "--exclude-entrypoints", "./tailwind.css"],
+    {
+      stdio: "inherit",
+    },
+  );
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }

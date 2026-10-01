@@ -1,0 +1,7 @@
+/* Tells Tailwind v4 where this package's class names live, so users don't
+   need to know the node_modules path. Usage, in your main CSS file:
+
+     @import "tailwindcss";
+     @import "@binii/react-onboarder/tailwind.css";
+*/
+@source "./dist/index.js";
