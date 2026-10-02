@@ -15,6 +15,12 @@ Fluid, type-safe product tours for React and Next.js. Styled with Tailwind, anim
 pnpm add @binii/react-onboarder
 ```
 
+or
+
+```bash
+npm install @binii/react-onboarder
+```
+
 Peer dependencies: `react` and `react-dom` 18 or 19, `framer-motion` 11 to 13. Your project needs Tailwind CSS (v3.4+ or v4).
 
 ## Let Tailwind see the classes
@@ -61,6 +67,8 @@ export const { OnboardingProvider, useOnboarding, defineTour, target } =
   createOnboarding<Target>();
 ```
 
+Import `defineTour`, `useOnboarding` and `target` from **this file** everywhere in your app, never from the package. These are bound to your `Target` union, so a typo in a step is a compile error. The package deliberately has no `defineTour` of its own (it couldn't know your ids and would accept any string), but it does export a generic `useOnboarding` for library-style code. If your editor auto-imports from `@binii/react-onboarder`, change the import.
+
 Wrap your app:
 
 ```tsx
@@ -84,37 +92,62 @@ Mark the elements to highlight:
 
 Spread `target(...)` on a plain DOM element. If a component doesn't forward unknown props, wrap it in a `<div>`.
 
-Define and start a tour:
+Define a tour as a hook, so it can use the router and isn't rebuilt on every render:
+
+```tsx
+// src/useOrdersTour.ts
+import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { defineTour } from "@/onboarding";
+
+export function useOrdersTour() {
+  const router = useRouter();
+
+  return useMemo(
+    () =>
+      defineTour("orders-onboarding", [
+        { title: "Welcome", content: "A quick look around." }, // no target = centered
+        {
+          target: "nav-orders",
+          title: "Orders",
+          content: "Everything you've sold.",
+          placement: "right",
+        },
+        {
+          target: "orders-table",
+          title: "The table",
+          content: "All your orders, in one place.",
+          onBeforeShow: () => router.push("/orders"), // may be async; the tour waits for the target
+        },
+      ]),
+    [router],
+  );
+}
+```
+
+Start it automatically, once per user:
 
 ```tsx
 "use client";
-import { useRouter } from "next/navigation";
 import { useAutoStartTour } from "@binii/react-onboarder";
-import { defineTour } from "@/onboarding";
+import { useOrdersTour } from "./useOrdersTour";
 
 export function OrdersTour() {
-  const router = useRouter();
-
-  const tour = defineTour("orders-onboarding", [
-    { title: "Welcome", content: "A quick look around." }, // no target = centered
-    {
-      target: "nav-orders",
-      title: "Orders",
-      content: "Everything you've sold.",
-      placement: "right",
-    },
-    {
-      target: "orders-table",
-      title: "The table",
-      content: "Newest first.",
-      onBeforeShow: () => router.push("/orders"), // may be async; the tour waits for the target
-    },
-  ]);
-
-  useAutoStartTour(tour); // once per user, remembered in localStorage
+  const tour = useOrdersTour();
+  useAutoStartTour(tour); // skipped if this user has already seen "orders-onboarding"
   return null;
 }
 ```
+
+### Tour ids
+
+The first argument of `defineTour` is the tour's id. It must be unique per tour, and it is what the library uses to:
+
+- remember that a user finished or skipped the tour (stored as `react-onboarder:seen:<id>`),
+- decide whether `useAutoStartTour` should start it,
+- identify the tour in `onStart`, `onStepChange`, `onComplete`, `onSkip` and `activeTourId`.
+
+Changing an id makes every user's tour count as unseen again. Use that on purpose when you redesign a tour, for example `"orders-onboarding-v2"`. Starting a tour with `startTour(tour)` always works, whether or not it was seen before.
 
 Or start one yourself: `const { startTour } = useOnboarding(); startTour(tour)`.
 

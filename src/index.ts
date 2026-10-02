@@ -2,7 +2,7 @@ export { OnboardingProvider, defaultLabels } from "./provider";
 export { useOnboarding } from "./context";
 export { useAutoStartTour } from "./use-auto-start-tour";
 export type { AutoStartTourOptions } from "./use-auto-start-tour";
-export { createOnboarding, defineTour } from "./create-onboarding";
+export { createOnboarding } from "./create-onboarding";
 export type { Onboarding } from "./create-onboarding";
 export { onboardTarget, TARGET_ATTRIBUTE } from "./target";
 export type { TargetProps } from "./target";
