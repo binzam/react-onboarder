@@ -1,6 +1,6 @@
 {
   "name": "@binii/react-onboarder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Fluid, type-safe product tours for React and Next.js. Tailwind-styled, Framer Motion animated, Floating UI positioned.",
   "license": "MIT",
   "author": "Binii",
