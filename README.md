@@ -1,8 +1,8 @@
 # @binii/react-onboarder
 
 ## Demo
-https://github.com/user-attachments/assets/11f54ab6-f5c8-47f3-8c02-07d42125c6c7
 
+[![Watch the react-onboarder demo](./docs/react-onboarder-demo-thumbnail.webp)](https://github.com/user-attachments/assets/11f54ab6-f5c8-47f3-8c02-07d42125c6c7)
 
 Fluid, type-safe product tours for React and Next.js. Styled with Tailwind, animated with Framer Motion, positioned with Floating UI.
 
