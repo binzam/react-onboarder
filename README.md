@@ -1,5 +1,9 @@
 # @binii/react-onboarder
 
+## Demo
+https://github.com/user-attachments/assets/11f54ab6-f5c8-47f3-8c02-07d42125c6c7
+
+
 Fluid, type-safe product tours for React and Next.js. Styled with Tailwind, animated with Framer Motion, positioned with Floating UI.
 
 - **No z-index wars.** The page is dimmed by one fixed overlay with a hole cut out over your target. Your element is never lifted or re-parented, so it keeps its own stacking context.
